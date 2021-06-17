@@ -2,6 +2,7 @@
 const {
   Model
 } = require('sequelize');
+const { Sequelize } = require('.');
 
 module.exports = (sequelize, DataTypes) => {
   class Cat extends Model {
@@ -14,7 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         allowNull: false
     },
-    description: DataTypes.STRING
+    description: DataTypes.STRING,
+    imageUrl: DataTypes.STRING
   }, {
     sequelize,
     modelName: 'Cat',

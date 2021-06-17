@@ -166,9 +166,20 @@ router.post('/:id/photo', uploader.single('image'), async (req, res, next) => {
             const encodedName = encodeURI(blob.name);
             const publicUrl = `https://firebasestorage.googleapis.com/v0/b/${bucket.name}/o/${encodedName}?alt=media`;
 
-            // save url on the cat
-
-            console.log(publicUrl);
+            Cat.update({
+                imageUrl: publicUrl
+            }, {
+                where: {
+                    id: catId
+                }
+            }).then(() => {
+                res.status(200).send({
+                    fileName: req.file.originalname,
+                    fileLocation: publicUrl
+                });
+            }).catch(() => {
+                res.status(400).send();
+            })
 
             res.send(publicUrl);
         });
